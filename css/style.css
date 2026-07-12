@@ -71,6 +71,118 @@ a { color: inherit; }
 }
 .skip-link:focus { top: 12px; }
 
+/* ============ INTRO "IL CAPOLINEA" ============ */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+}
+
+body.intro-lock { overflow: hidden; }
+
+.intro-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(50% + 1px);
+  background: var(--lavagna);
+  transition: transform 0.7s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.intro-door-l { left: 0; border-right: 1px solid rgba(233, 168, 32, 0.35); }
+.intro-door-r { right: 0; }
+
+.intro--open .intro-door-l { transform: translateX(-102%); }
+.intro--open .intro-door-r { transform: translateX(102%); }
+
+.intro-board {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  perspective: 700px;
+  transition: opacity 0.25s;
+}
+.intro--open .intro-board { opacity: 0; }
+
+.intro-flaps {
+  display: flex;
+  gap: 6px;
+}
+
+.flap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(32px, 7vw, 72px);
+  height: clamp(46px, 10vw, 100px);
+  background: #101010;
+  border-radius: 6px;
+  font-family: var(--f-board);
+  font-size: clamp(28px, 6.2vw, 64px);
+  font-weight: 600;
+  color: var(--giallo);
+  transform: rotateX(-92deg);
+  opacity: 0;
+  animation: flap-in 0.42s cubic-bezier(0.3, 0.9, 0.4, 1.08) forwards;
+}
+.flap::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.6);
+}
+.flap-space { background: transparent; }
+.flap-space::after { display: none; }
+
+.flap:nth-child(1) { animation-delay: 0.12s; }
+.flap:nth-child(2) { animation-delay: 0.20s; }
+.flap:nth-child(3) { animation-delay: 0.28s; }
+.flap:nth-child(4) { animation-delay: 0.36s; }
+.flap:nth-child(5) { animation-delay: 0.44s; }
+.flap:nth-child(6) { animation-delay: 0.52s; }
+.flap:nth-child(7) { animation-delay: 0.60s; }
+.flap:nth-child(8) { animation-delay: 0.68s; }
+.flap:nth-child(9) { animation-delay: 0.76s; }
+
+@keyframes flap-in {
+  to { transform: rotateX(0); opacity: 1; }
+}
+
+.intro-dest {
+  font-family: var(--f-board);
+  font-size: clamp(13px, 2vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--giallo);
+  opacity: 0;
+  animation: dest-in 0.4s ease 1.05s forwards;
+}
+@keyframes dest-in {
+  to { opacity: 0.95; }
+}
+
+/* ingresso hero orchestrato con la fine dell'intro */
+.has-intro .hero-inner {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.intro-done .hero-inner {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none; }
+  .has-intro .hero-inner { opacity: 1; transform: none; }
+}
+
 /* ============ TOPBAR ============ */
 
 .topbar {
